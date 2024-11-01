@@ -1,3 +1,33 @@
+function schemaParse(proxies, scheme, options = {skip: true}) {
+  let proxyGroups = Object.entries(scheme).map(([name, item]) => {
+    return {
+      name,
+      regExp: item.reg,
+      type: item.type || 'url-test',
+      url: 'http://www.gstatic.com/generate_204',
+      interval: 300,
+      tolerance: 50,
+      proxies: []
+    }
+  })
+
+  proxies.forEach(proxy => {
+    for (let item of proxyGroups) {
+      if (item.regExp.test(proxy.name)) {
+        item.proxies.push(proxy)
+        if (options.skip)  break
+      }
+    }
+  })
+
+  proxyGroups = proxyGroups.filter(item => {
+    delete item.regExp
+    return item.proxies.length > 0
+  })
+
+  return proxyGroups
+}
+
 module.exports.parse = async (raw, {axios, yaml, notify, console}, {name, url, interval, selected}) => {
   const params = yaml.parse(raw);
 
@@ -41,8 +71,7 @@ module.exports.parse = async (raw, {axios, yaml, notify, console}, {name, url, i
       ipcidr: ['240.0.0.0/4', '0.0.0.0/32']
     }
   }
-
-  const regionsList = {
+  const areaSchema = {
     '🇭🇰 香港节点': { reg: /^(?!.*游戏).*(香港|🇭🇰|HongKong|HK)+(.*)$/ },
     '🇨🇳 台湾节点': { reg: /^(?!.*游戏).*(台湾|🇨🇳|Taiwan|TW)+(.*)$/ },
     '🇯🇵 日本节点': { reg: /^(?!.*游戏).*(日本|🇯🇵|Japan|JP|东京)+(.*)$/ },
@@ -51,74 +80,42 @@ module.exports.parse = async (raw, {axios, yaml, notify, console}, {name, url, i
     '🇺🇲 美国节点': { reg: /^(?!.*游戏).*(美国|🇺🇸|American|US)+(.*)$/ },
     '🏳️‍🌈 其他地区': { reg: /^(?!.*游戏).*/ }
   }
-  const customProxies = {
-    lowRate: { reg: /(?<![0-9])0\.[0-9]+|低倍/ },
-    ai: { reg: /^(?!.*游戏).*(智能|ai|gpt)+(.*)/i },
-    download: { reg: /^(?!.*游戏).*(下载|Download|p2p|bt|(?<![0-9])0\.[0-9]+)+(.*)/i }
+  const customSchema = {
+    '⬇️ 低倍节点': { reg: /(?<![0-9])0\.[0-9]+|低倍/ },
+    '💬 人工智能': { reg: /^(?!.*游戏).*(ai|gpt)+(.*)/i },
+    // download: { reg: /^(?!.*游戏).*(下载|Download|p2p|bt|(?<![0-9])0\.[0-9]+)+(.*)/i }
   }
-  proxies.forEach(proxy => {
-    for (let key in regionsList) {
-      const region = regionsList[key]
-      !region.proxies && (region.proxies = [])
-      if (region.reg.test(proxy.name)) {
-        region.proxies.push(proxy.name)
-        break
-      }
-    }
 
-    for (let key in customProxies) {
-      const custom = customProxies[key]
-      !custom.proxies && (custom.proxies = [])
-      custom.reg.test(proxy.name) && custom.proxies.push(proxy.name)
-    }
-  })
-  const regionProxyGroups = Object.keys(regionsList).reduce((res, key) => {
-    const {type = 'url-test', proxies} = regionsList[key]
-    if (regionsList[key].proxies?.length) {
-      res.push({
-        name: key,
-        type: type,
-        url: 'http://www.gstatic.com/generate_204',
-        interval: 300,
-        tolerance: 50,
-        proxies: proxies
-      })
-    }
-    return res
-  }, [])
-  const regionProxyGroupNames = regionProxyGroups.map(regionProxyGroup => regionProxyGroup.name)
+  const areaProxyGroup = schemaParse(proxies, areaSchema)
+  const areaProxyGroupName = areaProxyGroup.map(item => item.name)
+  const customProxyGroup = schemaParse(proxies, customSchema, {skip: true})
 
   const proxyGroups = [
     {
       name: '🚀 节点选择',
       type: 'select',
-      proxies: ['🗺 地区节点', '🍭 低倍节点', 'DIRECT', ...proxies.map(item => item.name)]
+      proxies: ['🗺 地区节点', '⬇️ 低倍节点', 'DIRECT', ...proxies.map(item => item.name)]
     },
     {
       name: '🗺 地区节点', type: 'select',
-      proxies: regionProxyGroupNames
+      proxies: areaProxyGroupName
     },
     {
-      name: '🍭 低倍节点',
+      name: '⬇️ 低倍节点',
       type: 'select',
-      proxies: [...customProxies.lowRate.proxies, 'DIRECT']
-    },
-    {
-      name: '⬇️ 下载节点',
-      type: 'select',
-      proxies: [...customProxies.download.proxies, ...regionProxyGroupNames, 'DIRECT']
+      proxies: [...customProxyGroup['⬇️ 低倍节点'].proxies, 'DIRECT']
     },
     {
       name: '💬 人工智能',
       type: 'select',
-      proxies: [...customProxies.ai.proxies, ...regionProxyGroupNames, 'DIRECT']
+      proxies: [...customProxyGroup['💬 人工智能'].proxies, ...areaProxyGroupName, 'DIRECT']
     },
     {
       name: '🎮 游戏平台',
       type: 'select',
       proxies: ['🚀 节点选择', 'DIRECT']
     },
-    ...regionProxyGroups,
+    ...areaProxyGroup,
     {
       name: '🐟 漏网之鱼',
       type: 'select',
@@ -231,9 +228,9 @@ module.exports.parse = async (raw, {axios, yaml, notify, console}, {name, url, i
     'DOMAIN-SUFFIX,ys168.com,🚀 节点选择',
     'DOMAIN-SUFFIX,staticfile.net,🚀 节点选择',
     'DOMAIN-SUFFIX,jianguoyun.com,🚀 节点选择',
-    'DOMAIN-SUFFIX,storage.googleapis.com,⬇️ 下载节点',
-    'DOMAIN-SUFFIX,production.cloudflare.docker.com,⬇️ 下载节点',
-    'DOMAIN-SUFFIX,download-cdn.jetbrains.com,⬇️ 下载节点',
+    'DOMAIN-SUFFIX,storage.googleapis.com,⬇️ 低倍节点',
+    'DOMAIN-SUFFIX,production.cloudflare.docker.com,⬇️ 低倍节点',
+    'DOMAIN-SUFFIX,download-cdn.jetbrains.com,⬇️ 低倍节点',
     'DOMAIN-SUFFIX,bard.google.com,💬 人工智能',
     'RULE-SET,Direct,DIRECT',
     'RULE-SET,Lan,DIRECT',
