@@ -12,60 +12,27 @@ const customSchema = {
   '💬 人工智能': { reg: /^(?!.*游戏).*(ai|gpt)+(.*)/i }
 }
 
-const rules = [
-  'DOMAIN-SUFFIX,ysepan.com,🚀 节点选择',
-  'DOMAIN-SUFFIX,ys168.com,🚀 节点选择',
-  'DOMAIN-SUFFIX,staticfile.net,🚀 节点选择',
-  'DOMAIN-SUFFIX,jianguoyun.com,🚀 节点选择',
-  'DOMAIN-SUFFIX,storage.googleapis.com,⬇️ 低倍节点',
-  'DOMAIN-SUFFIX,production.cloudflare.docker.com,⬇️ 低倍节点',
-  'DOMAIN-SUFFIX,download-cdn.jetbrains.com,⬇️ 低倍节点',
-  'DOMAIN-SUFFIX,bard.google.com,💬 人工智能',
-  'RULE-SET,Direct,DIRECT',
-  'RULE-SET,Lan,DIRECT',
-  'RULE-SET,Download,DIRECT',
-  'RULE-SET,OpenAI,💬 人工智能',
-  'RULE-SET,Claude,💬 人工智能',
-  'RULE-SET,Game,🎮 游戏平台',
-  'RULE-SET,Apple,DIRECT',
-  'RULE-SET,Microsoft,DIRECT',
-  'RULE-SET,Google,🚀 节点选择',
-  'RULE-SET,Telegram,🚀 节点选择',
-  'RULE-SET,GFW,🚀 节点选择',
-  'RULE-SET,ChinaIP,DIRECT,no-resolve',
-  'GEOIP,CN,DIRECT,no-resolve',
-  'MATCH,🐟 漏网之鱼'
-]
-
 const ruleProviders = {
-  Direct: {
-    type: 'http',
-    behavior: 'classical',
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Direct/Direct.yaml',
-    format: 'yaml',
-    interval: 86400,
-    path: './ruleset/Direct.yaml'
-  },
-  Lan: {
-    type: 'http',
-    behavior: 'classical',
-    url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/LocalAreaNetwork.yaml',
-    format: 'yaml',
-    path: './ruleset/Lan.yaml',
-    interval: 86400
-  },
   Apple: {
     type: 'http',
     behavior: 'classical',
-    url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Apple.yaml',
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Apple/Apple.yaml',
     format: 'yaml',
     path: './ruleset/Apple.yaml',
+    interval: 86400
+  },
+  AppleDomain: {
+    type: 'http',
+    behavior: 'domain',
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Apple/Apple_Domain.yaml',
+    format: 'yaml',
+    path: './ruleset/Apple_Domain.yaml',
     interval: 86400
   },
   Microsoft: {
     type: 'http',
     behavior: 'classical',
-    url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Microsoft.yaml',
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Microsoft/Microsoft.yaml',
     format: 'yaml',
     path: './ruleset/Microsoft.yaml',
     interval: 86400
@@ -105,34 +72,94 @@ const ruleProviders = {
   Google: {
     type: 'http',
     behavior: 'classical',
-    url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Google.yaml',
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google.yaml',
     format: 'yaml',
     path: './ruleset/Google.yaml',
-    interval: '86400'
+    interval: 86400
+  },
+  YouTube: {
+    type: 'http',
+    behavior: 'classical',
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube.yaml',
+    format: 'yaml',
+    path: './ruleset/YouTube.yaml',
+    interval: 86400
+  },
+  YouTubeMusic: {
+    type: 'http',
+    behavior: 'classical',
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTubeMusic/YouTubeMusic.yaml',
+    format: 'yaml',
+    path: './ruleset/YouTubeMusic.yaml',
+    interval: 86400
   },
   Telegram: {
     type: 'http',
     behavior: 'classical',
-    url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Telegram.yaml',
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram.yaml',
     format: 'yaml',
     path: './ruleset/Telegram.yaml',
     interval: 86400
   },
   GFW: {
     type: 'http',
-    behavior: 'domain',
-    url: 'https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/gfw.txt',
-    path: './ruleset/GFW.yaml',
-    interval: '86400'
+    behavior: 'classical',
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ProxyLite/ProxyLite.yaml',
+    path: './ruleset/ProxyLite.yaml',
+    interval: 86400
   },
-  ChinaIP: {
+  China: {
     type: 'http',
-    behavior: 'ipcidr',
-    url: 'https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/cncidr.txt',
-    path: './ruleset/ChinaIP.yaml',
-    interval: 8640
+    behavior: 'classical',
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMax/ChinaMax.yaml',
+    format: 'yaml',
+    interval: 86400,
+    path: './ruleset/ChinaMax.yaml'
+  },
+  ChinaDomain: {
+    type: 'http',
+    behavior: 'domain',
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMax/ChinaMax_Domain.yaml',
+    format: 'yaml',
+    interval: 86400,
+    path: './ruleset/ChinaMax_Domain.yaml'
+  },
+  Lan: {
+    type: 'http',
+    behavior: 'classical',
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan.yaml',
+    format: 'yaml',
+    path: './ruleset/Lan.yaml',
+    interval: 86400
   }
 }
+const rules = [
+  'DOMAIN-SUFFIX,ysepan.com,🚀 节点选择',
+  'DOMAIN-SUFFIX,ys168.com,🚀 节点选择',
+  'DOMAIN-SUFFIX,staticfile.net,🚀 节点选择',
+  'DOMAIN-SUFFIX,jianguoyun.com,🚀 节点选择',
+  'DOMAIN-SUFFIX,storage.googleapis.com,⬇️ 低倍节点',
+  'DOMAIN-SUFFIX,production.cloudflare.docker.com,⬇️ 低倍节点',
+  'DOMAIN-SUFFIX,download-cdn.jetbrains.com,⬇️ 低倍节点',
+  'DOMAIN-SUFFIX,bard.google.com,💬 人工智能',
+  'RULE-SET,OpenAI,💬 人工智能',
+  'RULE-SET,Claude,💬 人工智能',
+  'RULE-SET,Download,⬇️ 低倍节点',
+  'RULE-SET,Game,🎮 游戏平台',
+  'RULE-SET,Apple,DIRECT',
+  'RULE-SET,AppleDomain,DIRECT',
+  'RULE-SET,Microsoft,DIRECT',
+  'RULE-SET,Google,🚀 节点选择',
+  'RULE-SET,YouTube,🚀 节点选择',
+  'RULE-SET,YouTubeMusic,🚀 节点选择',
+  'RULE-SET,Telegram,🚀 节点选择',
+  'RULE-SET,GFW,🚀 节点选择',
+  'RULE-SET,China,DIRECT',
+  'RULE-SET,ChinaDomain,DIRECT',
+  'RULE-SET,Lan,DIRECT',
+  'GEOIP,CN,DIRECT,no-resolve',
+  'MATCH,🐟 漏网之鱼'
+]
 
 const dns = {
   enable: true,
