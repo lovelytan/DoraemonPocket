@@ -262,7 +262,7 @@ async function main(
     {
       name: '⬇️ 低倍节点',
       type: 'select',
-      proxies: [...(customProxyGroup['⬇️ 低倍节点']?.proxies || []), 'DIRECT']
+      proxies: ['DIRECT', ...(customProxyGroup['⬇️ 低倍节点']?.proxies || []), ...areaProxyGroupName]
     },
     {
       name: '💬 人工智能',
