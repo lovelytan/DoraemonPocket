@@ -134,10 +134,6 @@ const ruleProviders = {
   }
 }
 const rules = [
-  'DOMAIN-SUFFIX,ysepan.com,🚀 节点选择',
-  'DOMAIN-SUFFIX,ys168.com,🚀 节点选择',
-  'DOMAIN-SUFFIX,staticfile.net,🚀 节点选择',
-  'DOMAIN-SUFFIX,jianguoyun.com,🚀 节点选择',
   'DOMAIN-SUFFIX,storage.googleapis.com,⬇️ 低倍节点',
   'DOMAIN-SUFFIX,production.cloudflare.docker.com,⬇️ 低倍节点',
   'DOMAIN-SUFFIX,download-cdn.jetbrains.com,⬇️ 低倍节点',
