@@ -134,6 +134,8 @@ const ruleProviders = {
   }
 }
 const rules = [
+  'DOMAIN-SUFFIX,deb.debian.org,⬇️ 低倍节点',
+  'DOMAIN-SUFFIX,dl.google.com,⬇️ 低倍节点',
   'DOMAIN-SUFFIX,storage.googleapis.com,⬇️ 低倍节点',
   'DOMAIN-SUFFIX,production.cloudflare.docker.com,⬇️ 低倍节点',
   'DOMAIN-SUFFIX,download-cdn.jetbrains.com,⬇️ 低倍节点',
@@ -249,7 +251,6 @@ async function main(
       type: 'select',
       proxies: [
         '🗺 地区节点',
-        '⬇️ 低倍节点',
         'DIRECT',
         ...proxies.map(item => item.name)
       ]
@@ -262,7 +263,7 @@ async function main(
     {
       name: '⬇️ 低倍节点',
       type: 'select',
-      proxies: ['DIRECT', ...(customProxyGroup['⬇️ 低倍节点']?.proxies || []), ...areaProxyGroupName]
+      proxies: ['DIRECT', '🚀 节点选择', ...(customProxyGroup['⬇️ 低倍节点']?.proxies || []), ...areaProxyGroupName]
     },
     {
       name: '💬 人工智能',
