@@ -170,19 +170,24 @@ const dns = {
     '*.localdomain',
     '*.localhost',
     '*.test',
-    '*.local',
-    '*.qq.com'
+    '*.local'
   ],
-  'default-nameserver': ['223.5.5.5', '119.29.29.29'],
-  nameserver: ['223.5.5.5', '119.29.29.29', 'tls://223.5.5.5:853'],
+  'default-nameserver': ['119.29.29.29', '223.5.5.5'],
+  nameserver: [
+    'https://doh.pub/dns-query',
+    'https://1.12.12.12/dns-query',
+    'https://120.53.53.53/dns-query',
+    'https://dns.alidns.com/dns-query',
+    'https://223.5.5.5/dns-query',
+    'https://223.6.6.6/dns-query'
+  ],
   fallback: [
-    'https://1.0.0.1/dns-query',
+    'https://1.1.1.1/dns-query',
     'https://doh.dns.sb/dns-query',
     'https://dns.cloudflare.com/dns-query',
     'https://dns.google/dns-query',
     'https://dns.twnic.tw/dns-query',
-    'https://dns.quad9.net/dns-query',
-    'tls://8.8.4.4:853'
+    'https://dns.quad9.net/dns-query'
   ],
   'fallback-filter': {
     geoip: true,
