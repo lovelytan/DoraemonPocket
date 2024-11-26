@@ -172,21 +172,23 @@ const dns = {
     '*.test',
     '*.local'
   ],
-  'default-nameserver': ['119.29.29.29', '223.5.5.5'],
+  'default-nameserver': [
+    '119.29.29.29',
+    '223.5.5.5',
+    '101.101.101.101'
+  ],
   nameserver: [
     'https://doh.pub/dns-query',
+    'https://dns.alidns.com/dns-query',
     'https://1.12.12.12/dns-query',
     'https://120.53.53.53/dns-query',
-    'https://dns.alidns.com/dns-query',
-    'https://223.5.5.5/dns-query',
     'https://223.6.6.6/dns-query'
   ],
   fallback: [
-    'https://1.1.1.1/dns-query',
+    'https://dns.twnic.tw/dns-query',
     'https://doh.dns.sb/dns-query',
     'https://dns.cloudflare.com/dns-query',
     'https://dns.google/dns-query',
-    'https://dns.twnic.tw/dns-query',
     'https://dns.quad9.net/dns-query'
   ],
   'fallback-filter': {
