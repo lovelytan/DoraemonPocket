@@ -16,17 +16,9 @@ const ruleProviders = {
   Apple: {
     type: 'http',
     behavior: 'classical',
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Apple/Apple.yaml',
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Apple/Apple_Classical.yaml',
     format: 'yaml',
     path: './ruleset/Apple.yaml',
-    interval: 86400
-  },
-  AppleDomain: {
-    type: 'http',
-    behavior: 'domain',
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Apple/Apple_Domain.yaml',
-    format: 'yaml',
-    path: './ruleset/Apple_Domain.yaml',
     interval: 86400
   },
   Microsoft: {
@@ -104,33 +96,17 @@ const ruleProviders = {
   GFW: {
     type: 'http',
     behavior: 'classical',
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ProxyLite/ProxyLite.yaml',
-    path: './ruleset/ProxyLite.yaml',
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Proxy/Proxy_Classical.yaml',
+    path: './ruleset/Proxy.yaml',
     interval: 86400
   },
   China: {
     type: 'http',
     behavior: 'classical',
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMax/ChinaMax.yaml',
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/China/China_Classical.yaml',
     format: 'yaml',
     interval: 86400,
-    path: './ruleset/ChinaMax.yaml'
-  },
-  ChinaDomain: {
-    type: 'http',
-    behavior: 'domain',
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMax/ChinaMax_Domain.yaml',
-    format: 'yaml',
-    interval: 86400,
-    path: './ruleset/ChinaMax_Domain.yaml'
-  },
-  Lan: {
-    type: 'http',
-    behavior: 'classical',
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan.yaml',
-    format: 'yaml',
-    path: './ruleset/Lan.yaml',
-    interval: 86400
+    path: './ruleset/China.yaml'
   }
 }
 const rules = [
@@ -145,7 +121,6 @@ const rules = [
   'RULE-SET,Download,⬇️ 低倍节点',
   'RULE-SET,Game,🎮 游戏平台',
   'RULE-SET,Apple,DIRECT',
-  'RULE-SET,AppleDomain,DIRECT',
   'RULE-SET,Microsoft,DIRECT',
   'RULE-SET,Google,🚀 节点选择',
   'RULE-SET,YouTube,🚀 节点选择',
@@ -153,25 +128,16 @@ const rules = [
   'RULE-SET,Telegram,🚀 节点选择',
   'RULE-SET,GFW,🚀 节点选择',
   'RULE-SET,China,DIRECT',
-  'RULE-SET,ChinaDomain,DIRECT',
-  'RULE-SET,Lan,DIRECT',
   'GEOIP,CN,DIRECT,no-resolve',
   'MATCH,🐟 漏网之鱼'
 ]
 
 const dns = {
   enable: true,
-  ipv6: true,
+  ipv6: false,
   'use-hosts': true,
   'enhanced-mode': 'fake-ip',
   'fake-ip-range': '198.18.0.1/16',
-  'fake-ip-filter': [
-    '*.lan',
-    '*.localdomain',
-    '*.localhost',
-    '*.test',
-    '*.local'
-  ],
   'default-nameserver': [
     '119.29.29.29',
     '223.5.5.5',
@@ -179,16 +145,12 @@ const dns = {
   ],
   nameserver: [
     'https://doh.pub/dns-query',
-    'https://dns.alidns.com/dns-query',
-    'https://1.12.12.12/dns-query',
-    'https://120.53.53.53/dns-query',
-    'https://223.6.6.6/dns-query'
+    'https://dns.alidns.com/dns-query'
   ],
   fallback: [
     'https://dns.twnic.tw/dns-query',
     'https://doh.dns.sb/dns-query',
     'https://dns.cloudflare.com/dns-query',
-    'https://dns.google/dns-query',
     'https://dns.quad9.net/dns-query'
   ],
   'fallback-filter': {
