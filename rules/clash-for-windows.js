@@ -103,7 +103,7 @@ const ruleProviders = {
   China: {
     type: 'http',
     behavior: 'classical',
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMax/ChinaMax_Classical.yaml',
+    url: 'https://raw.githubusercontent.com/ericz15/ios_rule_script/master/rule/Clash/ChinaMax/ChinaMax_Classical.yaml',
     format: 'yaml',
     interval: 86400,
     path: './ruleset/China.yaml'
