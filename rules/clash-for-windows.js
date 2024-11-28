@@ -149,17 +149,20 @@ const dns = {
   'fake-ip-range': '198.18.0.1/16',
   'default-nameserver': [
     '119.29.29.29',
-    '223.5.5.5',
-    '101.101.101.101'
+    '1.0.0.1',
+    '223.5.5.5'
   ],
   nameserver: [
     'https://doh.pub/dns-query',
-    'https://dns.alidns.com/dns-query'
+    'https://dns.alidns.com/dns-query',
+    'https://101.6.6.6:8443/dns-query',
+    'tls://1.12.12.12'
   ],
   fallback: [
-    'https://dns.twnic.tw/dns-query',
-    'https://doh.dns.sb/dns-query',
-    'https://dns.cloudflare.com/dns-query',
+    'https://1.0.0.1/dns-query',
+    'https://1.1.1.1/dns-query',
+    'tls://1.0.0.1:853',
+    'tls://8.8.4.4:853',
     'https://dns.quad9.net/dns-query'
   ],
   'fallback-filter': {
