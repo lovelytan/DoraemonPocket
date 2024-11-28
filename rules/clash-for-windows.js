@@ -96,14 +96,14 @@ const ruleProviders = {
   GFW: {
     type: 'http',
     behavior: 'classical',
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Proxy/Proxy_Classical.yaml',
+    url: 'https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/gfw.txt',
     path: './ruleset/Proxy.yaml',
     interval: 86400
   },
   China: {
     type: 'http',
     behavior: 'classical',
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/China/China_Classical.yaml',
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMax/ChinaMax_Classical.yaml',
     format: 'yaml',
     interval: 86400,
     path: './ruleset/China.yaml'
