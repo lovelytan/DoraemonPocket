@@ -95,9 +95,9 @@ const ruleProviders = {
   },
   GFW: {
     type: 'http',
-    behavior: 'classical',
+    behavior: 'domain',
     url: 'https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/gfw.txt',
-    path: './ruleset/Proxy.yaml',
+    path: './ruleset/GFW.yaml',
     interval: 86400
   },
   China: {
