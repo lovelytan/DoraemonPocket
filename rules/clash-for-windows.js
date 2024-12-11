@@ -21,6 +21,14 @@ const ruleProviders = {
     path: './ruleset/Apple.yaml',
     interval: 86400
   },
+  OneDrive: {
+    type: 'http',
+    behavior: 'classical',
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OneDrive/OneDrive.yaml',
+    format: 'yaml',
+    path: './ruleset/OneDrive.yaml',
+    interval: 86400
+  },
   Microsoft: {
     type: 'http',
     behavior: 'classical',
@@ -129,6 +137,7 @@ const rules = [
   'RULE-SET,Download,⬇️ 低倍节点',
   'RULE-SET,Game,🎮 游戏平台',
   'RULE-SET,Apple,DIRECT',
+  'RULE-SET,OneDrive,⬇️ 低倍节点',
   'RULE-SET,Microsoft,DIRECT',
   'RULE-SET,Google,🚀 节点选择',
   'RULE-SET,YouTube,🚀 节点选择',
